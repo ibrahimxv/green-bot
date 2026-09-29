@@ -1,0 +1,32 @@
+name: Max Green Activity
+
+on:
+  schedule:
+    # Hər gün UTC vaxtı ilə saat 00:00-da işləyir
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Istədiyiniz vaxt əllə də başlada bilərsiniz
+
+jobs:
+  multi-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "ibrahimjk@code.edu.az"
+          git config --local user.name "ibrahimxv"
+
+      - name: Make 15 commits for dark green tone
+        run: |
+          for i in {1..15}
+          do
+            echo "Commit #$i on $(date)" >> activity.log
+            git add activity.log
+            git commit -m "Daily activity booster #$i"
+          done
+
+      - name: Push changes
+        run: |
+          git push origin main
